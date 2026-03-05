@@ -1,0 +1,834 @@
+!DOCTYPE html
+html lang=en class=scroll-smooth
+head
+    meta charset=UTF-8
+    meta name=viewport content=width=device-width, initial-scale=1.0
+    titleEA League  Competitive Gamingtitle
+    script src=httpscdn.tailwindcss.comscript
+    link href=httpscdnjs.cloudflare.comajaxlibsfont-awesome6.0.0cssall.min.css rel=stylesheet
+    link href=httpsfonts.googleapis.comcss2family=Orbitronwght@400;500;700;900&family=Rajdhaniwght@300;500;700&display=swap rel=stylesheet
+    script
+        tailwind.config = {
+            theme {
+                extend {
+                    fontFamily {
+                        sans ['Rajdhani', 'sans-serif'],
+                        display ['Orbitron', 'sans-serif'],
+                    },
+                    colors {
+                        brand {
+                            dark '#050505',
+                            panel '#0f1115',
+                            accent '#10b981',  Emerald 500
+                            glow '#34d399',    Emerald 400
+                            dim '#064e3b'      Emerald 900
+                        }
+                    },
+                    animation {
+                        'pulse-slow' 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float' 'float 6s ease-in-out infinite',
+                    },
+                    keyframes {
+                        float {
+                            '0%, 100%' { transform 'translateY(0)' },
+                            '50%' { transform 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    script
+    style
+        body {
+            background-color #050505;
+            color #e2e8f0;
+            overflow-x hidden;
+        }
+        
+         Custom Scrollbar 
+        -webkit-scrollbar {
+            width 8px;
+        }
+        -webkit-scrollbar-track {
+            background #0f1115; 
+        }
+        -webkit-scrollbar-thumb {
+            background #10b981; 
+            border-radius 4px;
+        }
+        -webkit-scrollbar-thumbhover {
+            background #34d399; 
+        }
+
+         Glassmorphism Utilities 
+        .glass-panel {
+            background rgba(15, 17, 21, 0.7);
+            backdrop-filter blur(12px);
+            -webkit-backdrop-filter blur(12px);
+            border 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .glass-nav {
+            background rgba(5, 5, 5, 0.85);
+            backdrop-filter blur(10px);
+            border-bottom 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+         Neon Text Glow 
+        .text-glow {
+            text-shadow 0 0 10px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+         Input Styling 
+        .input-field {
+            background rgba(0, 0, 0, 0.4);
+            border 1px solid #334155;
+            color white;
+            transition all 0.3s ease;
+        }
+        .input-fieldfocus {
+            border-color #10b981;
+            box-shadow 0 0 15px rgba(16, 185, 129, 0.2);
+            outline none;
+        }
+
+         Background Grid 
+        .bg-grid {
+            background-size 40px 40px;
+            background-image linear-gradient(to right, rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+            mask-image linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+    style
+head
+body class=antialiased min-h-screen flex flex-col relative
+
+    !-- Background Effects --
+    div class=fixed inset-0 z-[-1] bg-grid pointer-events-nonediv
+    div class=fixed top-0 left-0 w-full h-full z-[-2] overflow-hidden
+        div class=absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-90020 rounded-full blur-[120px]div
+        div class=absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-80020 rounded-full blur-[120px]div
+    div
+
+    !-- Navigation --
+    nav class=fixed w-full z-50 glass-nav transition-all duration-300 id=navbar
+        div class=max-w-7xl mx-auto px-4 smpx-6 lgpx-8
+            div class=flex items-center justify-between h-20
+                div class=flex-shrink-0 cursor-pointer onclick=window.scrollTo(0,0)
+                    span class=font-display font-black text-3xl tracking-tighter text-white
+                        EA span class=text-emerald-500 text-glowLEAGUEspan
+                    span
+                div
+                div class=hidden mdblock
+                    div class=ml-10 flex items-baseline space-x-8
+                        a href=#about class=hovertext-emerald-400 px-3 py-2 rounded-md text-lg font-medium transition-colorsAbouta
+                        a href=#teams class=hovertext-emerald-400 px-3 py-2 rounded-md text-lg font-medium transition-colorsTeamsa
+                        a href=#apply class=hovertext-emerald-400 px-3 py-2 rounded-md text-lg font-medium transition-colorsApplya
+                        a href=#support class=hovertext-emerald-400 px-3 py-2 rounded-md text-lg font-medium transition-colorsSupporta
+                        a href=#staff class=bg-emerald-600 hoverbg-emerald-500 text-white px-4 py-2 rounded-md text-lg font-bold transition-all shadow-[0_0_15px_rgba(16,185,129,0.4)]
+                            i class=fas fa-lock mr-2iStaff
+                        a
+                    div
+                div
+                !-- Mobile menu button --
+                div class=-mr-2 flex mdhidden
+                    button onclick=document.getElementById('mobile-menu').classList.toggle('hidden') class=inline-flex items-center justify-center p-2 rounded-md text-emerald-400 hovertext-white hoverbg-emerald-900 focusoutline-none
+                        i class=fas fa-bars text-2xli
+                    button
+                div
+            div
+        div
+        !-- Mobile Menu --
+        div class=hidden mdhidden glass-panel border-t border-emerald-90050 id=mobile-menu
+            div class=px-2 pt-2 pb-3 space-y-1 smpx-3
+                a href=#about class=text-gray-300 hovertext-white block px-3 py-2 rounded-md text-base font-mediumAbouta
+                a href=#teams class=text-gray-300 hovertext-white block px-3 py-2 rounded-md text-base font-mediumTeamsa
+                a href=#apply class=text-gray-300 hovertext-white block px-3 py-2 rounded-md text-base font-mediumApplya
+                a href=#support class=text-gray-300 hovertext-white block px-3 py-2 rounded-md text-base font-mediumSupporta
+                a href=#staff class=text-emerald-400 block px-3 py-2 rounded-md text-base font-boldStaff Logina
+            div
+        div
+    nav
+
+    !-- Global Announcement Modal (Shows every time until closed) --
+    div id=global-announcement-modal class=fixed inset-0 z-[100] flex items-center justify-center bg-black80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300
+        div class=glass-panel bg-[#0f1115] p-8 rounded-2xl max-w-lg w-full mx-4 border border-emerald-50050 shadow-[0_0_50px_rgba(16,185,129,0.2)] transform scale-95 transition-transform duration-300 id=announcement-content
+            div class=flex justify-between items-start mb-4
+                div class=flex items-center gap-3
+                    div class=bg-emerald-50020 p-2 rounded-full
+                        i class=fas fa-bullhorn text-emerald-400 text-xli
+                    div
+                    h2 class=text-2xl font-display font-bold text-whiteAnnouncementh2
+                div
+                button onclick=closeAnnouncement() class=text-gray-400 hovertext-white transition-colors
+                    i class=fas fa-times text-xli
+                button
+            div
+            div id=announcement-body class=text-gray-300 mb-6 leading-relaxed
+                !-- Content injected via JS --
+            div
+            button onclick=closeAnnouncement() class=w-full bg-emerald-600 hoverbg-emerald-500 text-white font-bold py-3 rounded-lg transition-all shadow-lg shadow-emerald-90050
+                Acknowledge
+            button
+        div
+    div
+
+    !-- Hero Section --
+    section class=relative pt-32 pb-20 lgpt-48 lgpb-32 overflow-hidden
+        div class=max-w-7xl mx-auto px-4 smpx-6 lgpx-8 relative z-10 text-center
+            div class=inline-block mb-4 px-4 py-1 rounded-full border border-emerald-50030 bg-emerald-50010 text-emerald-400 text-sm font-bold tracking-widest uppercase animate-pulse-slow
+                Rainbow Six Siege Competitive
+            div
+            h1 class=text-5xl mdtext-7xl lgtext-8xl font-display font-black text-white mb-6 tracking-tight
+                ELITE span class=text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 text-glowCOMPETITIVEspan
+            h1
+            p class=mt-4 max-w-2xl mx-auto text-xl text-gray-400 font-light
+                Join the next generation of tactical shooters. Tropical vibes. Green Reign. Pure Dominance.
+            p
+            div class=mt-10 flex justify-center gap-4
+                a href=#apply class=px-8 py-4 bg-emerald-600 hoverbg-emerald-500 text-white rounded-lg font-bold text-lg transition-all shadow-[0_0_20px_rgba(16,185,129,0.4)] hovershadow-[0_0_30px_rgba(16,185,129,0.6)] transform hover-translate-y-1
+                    Apply Now
+                a
+                a href=httpsdiscord.ggrsp8MBkvzu target=_blank class=px-8 py-4 glass-panel hoverbg-white5 text-white rounded-lg font-bold text-lg transition-all border border-gray-700 hoverborder-emerald-50050 flex items-center gap-2
+                    i class=fab fa-discord text-indigo-400i Join Discord
+                a
+            div
+        div
+    section
+
+    !-- About  Tiers Section --
+    section id=about class=py-20 relative
+        div class=max-w-7xl mx-auto px-4 smpx-6 lgpx-8
+            div class=text-center mb-16
+                h2 class=text-3xl mdtext-4xl font-display font-bold text-white mb-4Competitive Structureh2
+                div class=w-24 h-1 bg-emerald-500 mx-auto rounded-fulldiv
+            div
+
+            div class=grid grid-cols-1 mdgrid-cols-2 lggrid-cols-4 gap-6
+                !-- Tier Cards --
+                div class=glass-panel p-6 rounded-xl hoverborder-emerald-50050 transition-all duration-300 group hover-translate-y-2
+                    div class=text-4xl font-display font-black text-emerald-500 mb-4 group-hovertext-emerald-400 transition-colors01div
+                    h3 class=text-xl font-bold text-white mb-2Elite Tierh3
+                    ul class=text-gray-400 text-sm space-y-2
+                        li class=flex items-centeri class=fas fa-check text-emerald-500 mr-2i Champion & Diamondli
+                        li class=flex items-centeri class=fas fa-check text-emerald-500 mr-2i 1.0+ KD Ratioli
+                        li class=flex items-centeri class=fas fa-check text-emerald-500 mr-2i Daily Scrimsli
+                    ul
+                div
+
+                div class=glass-panel p-6 rounded-xl hoverborder-emerald-50050 transition-all duration-300 group hover-translate-y-2
+                    div class=text-4xl font-display font-black text-emerald-500 mb-4 group-hovertext-emerald-400 transition-colors02div
+                    h3 class=text-xl font-bold text-white mb-2Advanced Tierh3
+                    ul class=text-gray-400 text-sm space-y-2
+                        li class=flex items-centeri class=fas fa-check text-emerald-500 mr-2i Emerald & Platinumli
+                        li class=flex items-centeri class=fas fa-check text-emerald-500 mr-2i 0.9+ KD Ratioli
+                        li class=flex items-centeri class=fas fa-check text-emerald-500 mr-2i 4+ DaysWeekli
+                    ul
+                div
+
+                div class=glass-panel p-6 rounded-xl hoverborder-emerald-50050 transition-all duration-300 group hover-translate-y-2
+                    div class=text-4xl font-display font-black text-emerald-500 mb-4 group-hovertext-emerald-400 transition-colors03div
+                    h3 class=text-xl font-bold text-white mb-2Intermediateh3
+                    ul class=text-gray-400 text-sm space-y-2
+                        li class=flex items-centeri class=fas fa-check text-emerald-500 mr-2i Gold & Silverli
+                        li class=flex items-centeri class=fas fa-check text-emerald-500 mr-2i 0.8+ KD Ratioli
+                        li class=flex items-centeri class=fas fa-check text-emerald-500 mr-2i Weekend Scrimsli
+                    ul
+                div
+
+                div class=glass-panel p-6 rounded-xl hoverborder-emerald-50050 transition-all duration-300 group hover-translate-y-2
+                    div class=text-4xl font-display font-black text-emerald-500 mb-4 group-hovertext-emerald-400 transition-colors04div
+                    h3 class=text-xl font-bold text-white mb-2Developmenth3
+                    ul class=text-gray-400 text-sm space-y-2
+                        li class=flex items-centeri class=fas fa-check text-emerald-500 mr-2i Bronze & Copperli
+                        li class=flex items-centeri class=fas fa-check text-emerald-500 mr-2i No KD Reqli
+                        li class=flex items-centeri class=fas fa-check text-emerald-500 mr-2i Mentorshipli
+                    ul
+                div
+            div
+        div
+    section
+
+    !-- Teams Section --
+    section id=teams class=py-20 bg-black30
+        div class=max-w-7xl mx-auto px-4 smpx-6 lgpx-8
+            div class=text-center mb-16
+                h2 class=text-3xl mdtext-4xl font-display font-bold text-white mb-4Our Rosterh2
+                div class=w-24 h-1 bg-emerald-500 mx-auto rounded-fulldiv
+            div
+
+            div class=grid grid-cols-1 mdgrid-cols-2 gap-8
+                !-- Team 1 --
+                div class=glass-panel p-8 rounded-2xl border-l-4 border-emerald-500 relative overflow-hidden group
+                    div class=absolute top-0 right-0 bg-emerald-50010 px-4 py-1 rounded-bl-lg text-emerald-400 text-xs font-bold tracking-widestTIER 1div
+                    h3 class=text-3xl font-display font-bold text-white mb-2TEAM 1h3
+                    p class=text-gray-400 mb-6The Elite Squad. Best of the Best. Our premier competitive roster.p
+                    div class=inline-flex items-center px-3 py-1 rounded-full bg-red-50010 border border-red-50030 text-red-400 text-sm font-bold
+                        span class=w-2 h-2 bg-red-500 rounded-full mr-2span Closed - Invite Only
+                    div
+                div
+
+                !-- Team 2 --
+                div class=glass-panel p-8 rounded-2xl border-l-4 border-yellow-500 relative overflow-hidden group
+                    div class=absolute top-0 right-0 bg-yellow-50010 px-4 py-1 rounded-bl-lg text-yellow-400 text-xs font-bold tracking-widestTIER 2div
+                    h3 class=text-3xl font-display font-bold text-white mb-2TEAM 2h3
+                    p class=text-gray-400 mb-6Advanced Backup. Trained directly by Team 1 coaches.p
+                    div class=inline-flex items-center px-3 py-1 rounded-full bg-yellow-50010 border border-yellow-50030 text-yellow-400 text-sm font-bold
+                        span class=w-2 h-2 bg-yellow-500 rounded-full mr-2 animate-pulsespan Recruiting - Tryouts
+                    div
+                div
+
+                !-- Team 3 --
+                div class=glass-panel p-8 rounded-2xl border-l-4 border-emerald-500 relative overflow-hidden group
+                    div class=absolute top-0 right-0 bg-emerald-50010 px-4 py-1 rounded-bl-lg text-emerald-400 text-xs font-bold tracking-widestTIER 3div
+                    h3 class=text-3xl font-display font-bold text-white mb-2TEAM 3h3
+                    p class=text-gray-400 mb-6Intermediate Squad. Perfect for players looking to break into competitive play.p
+                    div class=inline-flex items-center px-3 py-1 rounded-full bg-emerald-50010 border border-emerald-50030 text-emerald-400 text-sm font-bold
+                        span class=w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulsespan Open - Apply Below
+                    div
+                div
+
+                !-- Team 4 --
+                div class=glass-panel p-8 rounded-2xl border-l-4 border-blue-500 relative overflow-hidden group
+                    div class=absolute top-0 right-0 bg-blue-50010 px-4 py-1 rounded-bl-lg text-blue-400 text-xs font-bold tracking-widestDEVdiv
+                    h3 class=text-3xl font-display font-bold text-white mb-2TEAM 4h3
+                    p class=text-gray-400 mb-6Rookies & Development. The starting point for your competitive journey.p
+                    div class=inline-flex items-center px-3 py-1 rounded-full bg-blue-50010 border border-blue-50030 text-blue-400 text-sm font-bold
+                        span class=w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulsespan Open - Join Anytime
+                    div
+                div
+            div
+        div
+    section
+
+    !-- Application Section --
+    section id=apply class=py-20 relative
+        div class=max-w-3xl mx-auto px-4 smpx-6 lgpx-8
+            div class=glass-panel rounded-2xl p-8 mdp-12 border border-emerald-50020 shadow-2xl
+                div class=text-center mb-10
+                    h2 class=text-3xl font-display font-bold text-whiteJoin The Leagueh2
+                    p class=text-gray-400 mt-2Fill out the form below to apply for a team.p
+                div
+
+                form id=applicationForm class=space-y-6 onsubmit=handleApplication(event)
+                    div class=grid grid-cols-1 mdgrid-cols-2 gap-6
+                        div
+                            label class=block text-sm font-medium text-gray-400 mb-2Discord Usernamelabel
+                            input type=text id=appDiscord required class=w-full input-field rounded-lg p-3 placeholder=User#1234
+                        div
+                        div
+                            label class=block text-sm font-medium text-gray-400 mb-2Uplay IDlabel
+                            input type=text id=appUplay required class=w-full input-field rounded-lg p-3 placeholder=UplayName
+                        div
+                    div
+
+                    div class=grid grid-cols-1 mdgrid-cols-2 gap-6
+                        div
+                            label class=block text-sm font-medium text-gray-400 mb-2Current Ranklabel
+                            select id=appRank required class=w-full input-field rounded-lg p-3
+                                option value= disabled selectedSelect Rankoption
+                                option value=ChampionChampionoption
+                                option value=DiamondDiamondoption
+                                option value=EmeraldEmeraldoption
+                                option value=PlatinumPlatinumoption
+                                option value=GoldGoldoption
+                                option value=SilverSilveroption
+                                option value=BronzeBronzeoption
+                            select
+                        div
+                        div
+                            label class=block text-sm font-medium text-gray-400 mb-2Target Teamlabel
+                            select id=appTeam required class=w-full input-field rounded-lg p-3
+                                option value= disabled selectedSelect Teamoption
+                                option value=Team 2Team 2 (EmeraldPlat)option
+                                option value=Team 3Team 3 (GoldSilver)option
+                                option value=Team 4Team 4 (BronzeCopper)option
+                            select
+                        div
+                    div
+
+                    div
+                        label class=block text-sm font-medium text-gray-400 mb-2Why should we pick youlabel
+                        textarea id=appReason required rows=4 class=w-full input-field rounded-lg p-3 placeholder=Tell us about your experience...textarea
+                    div
+
+                    button type=submit class=w-full bg-emerald-600 hoverbg-emerald-500 text-white font-bold py-4 rounded-lg transition-all shadow-lg shadow-emerald-90050 transform hover-translate-y-1
+                        Submit Application
+                    button
+                form
+            div
+        div
+    section
+
+    !-- Support Section --
+    section id=support class=py-20 bg-black30
+        div class=max-w-4xl mx-auto px-4 smpx-6 lgpx-8
+            div class=text-center mb-12
+                h2 class=text-3xl font-display font-bold text-whiteSupport Centerh2
+                p class=text-gray-400 mt-2Need help Create a ticket or check your existing tickets.p
+            div
+
+            div class=glass-panel rounded-2xl p-8 border border-gray-800
+                !-- Tabs --
+                div class=flex border-b border-gray-700 mb-8
+                    button onclick=switchSupportTab('create') id=tab-create class=px-6 py-3 text-emerald-400 border-b-2 border-emerald-500 font-bold transition-colorsCreate Ticketbutton
+                    button onclick=switchSupportTab('view') id=tab-view class=px-6 py-3 text-gray-400 hovertext-white transition-colorsView My Ticketsbutton
+                div
+
+                !-- Create Ticket --
+                div id=panel-create class=support-panel
+                    form onsubmit=handleTicketCreate(event) class=space-y-4
+                        div
+                            label class=block text-sm text-gray-400 mb-1Subjectlabel
+                            input type=text id=ticketSubject required class=w-full input-field rounded p-3
+                        div
+                        div
+                            label class=block text-sm text-gray-400 mb-1Descriptionlabel
+                            textarea id=ticketDesc required rows=4 class=w-full input-field rounded p-3textarea
+                        div
+                        button type=submit class=bg-emerald-600 hoverbg-emerald-500 text-white px-6 py-2 rounded font-bold transition-colors
+                            Submit Ticket
+                        button
+                    form
+                div
+
+                !-- View Tickets --
+                div id=panel-view class=support-panel hidden
+                    div class=mb-4 flex gap-2
+                        input type=text id=searchDiscord placeholder=Enter Discord User#1234 class=flex-1 input-field rounded p-3
+                        button onclick=loadUserTickets() class=bg-gray-700 hoverbg-gray-600 text-white px-4 py-2 rounded font-boldSearchbutton
+                    div
+                    div id=ticketListContainer class=space-y-4 max-h-[400px] overflow-y-auto pr-2
+                        !-- Tickets injected here --
+                        div class=text-center text-gray-500 py-8Enter your Discord to view ticketsdiv
+                    div
+                div
+            div
+        div
+    section
+
+    !-- Staff Section --
+    section id=staff class=py-20 relative
+        div class=max-w-5xl mx-auto px-4 smpx-6 lgpx-8
+            div class=glass-panel rounded-2xl p-8 border border-emerald-50030 shadow-[0_0_30px_rgba(16,185,129,0.1)]
+                
+                !-- Login View --
+                div id=staff-login-view class=max-w-md mx-auto text-center py-10
+                    div class=w-16 h-16 bg-emerald-90050 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-50050
+                        i class=fas fa-shield-alt text-2xl text-emerald-400i
+                    div
+                    h2 class=text-2xl font-display font-bold text-white mb-2Staff Portalh2
+                    p class=text-gray-400 mb-8Authorized personnel only.p
+                    
+                    form onsubmit=handleStaffLogin(event) class=space-y-4 text-left
+                        div
+                            label class=text-xs text-gray-500 uppercase font-bold tracking-widerUsernamelabel
+                            input type=text id=staffUser class=w-full input-field rounded p-3 mt-1 required
+                        div
+                        div
+                            label class=text-xs text-gray-500 uppercase font-bold tracking-widerPasswordlabel
+                            input type=password id=staffPass class=w-full input-field rounded p-3 mt-1 required
+                        div
+                        button type=submit class=w-full bg-emerald-600 hoverbg-emerald-500 text-white font-bold py-3 rounded transition-all mt-4
+                            Access Dashboard
+                        button
+                    form
+                div
+
+                !-- Dashboard View --
+                div id=staff-dashboard-view class=hidden
+                    div class=flex justify-between items-center mb-8 border-b border-gray-700 pb-4
+                        div
+                            h2 class=text-2xl font-display font-bold text-whiteAdmin Dashboardh2
+                            p class=text-emerald-400 text-smWelcome, span id=staffNameDisplayAdminspanp
+                        div
+                        button onclick=staffLogout() class=text-red-400 hovertext-red-300 text-sm font-bold
+                            i class=fas fa-sign-out-alt mr-1i Logout
+                        button
+                    div
+
+                    div class=grid grid-cols-1 mdgrid-cols-3 gap-6 mb-8
+                        !-- Stats --
+                        div class=bg-black40 p-4 rounded-lg border border-gray-700
+                            div class=text-gray-400 text-xs uppercase font-boldPending Appsdiv
+                            div class=text-2xl font-bold text-white mt-1 id=stat-apps0div
+                        div
+                        div class=bg-black40 p-4 rounded-lg border border-gray-700
+                            div class=text-gray-400 text-xs uppercase font-boldOpen Ticketsdiv
+                            div class=text-2xl font-bold text-white mt-1 id=stat-tickets0div
+                        div
+                        div class=bg-black40 p-4 rounded-lg border border-emerald-50030 cursor-pointer hoverbg-emerald-90020 transition-colors onclick=toggleAnnouncementForm()
+                            div class=text-emerald-400 text-xs uppercase font-boldi class=fas fa-plus mr-1i New Actiondiv
+                            div class=text-lg font-bold text-white mt-1Post Announcementdiv
+                        div
+                    div
+
+                    !-- Announcement Form (Hidden) --
+                    div id=announcement-form class=hidden mb-8 bg-emerald-90010 p-6 rounded-lg border border-emerald-50030
+                        h3 class=text-lg font-bold text-white mb-4Post Global Announcementh3
+                        div class=space-y-4
+                            input type=text id=newAnnTitle placeholder=Title class=w-full input-field rounded p-3
+                            textarea id=newAnnBody placeholder=Message content... rows=3 class=w-full input-field rounded p-3textarea
+                            div class=flex gap-2
+                                button onclick=postNewAnnouncement() class=bg-emerald-600 hoverbg-emerald-500 text-white px-4 py-2 rounded font-boldPost Nowbutton
+                                button onclick=toggleAnnouncementForm() class=bg-gray-700 hoverbg-gray-600 text-white px-4 py-2 rounded font-boldCancelbutton
+                            div
+                        div
+                    div
+
+                    !-- Data Lists --
+                    div class=grid grid-cols-1 lggrid-cols-2 gap-8
+                        !-- Applications List --
+                        div
+                            h3 class=text-lg font-bold text-white mb-4 border-l-4 border-emerald-500 pl-3Recent Applicationsh3
+                            div class=space-y-3 max-h-[400px] overflow-y-auto pr-2 id=admin-apps-list
+                                !-- Apps go here --
+                            div
+                        div
+
+                        !-- Tickets List --
+                        div
+                            h3 class=text-lg font-bold text-white mb-4 border-l-4 border-blue-500 pl-3Support Ticketsh3
+                            div class=space-y-3 max-h-[400px] overflow-y-auto pr-2 id=admin-tickets-list
+                                !-- Tickets go here --
+                            div
+                        div
+                    div
+                div
+
+            div
+        div
+    section
+
+    !-- Footer --
+    footer class=bg-black border-t border-gray-800 py-12 mt-auto
+        div class=max-w-7xl mx-auto px-4 text-center
+            div class=flex justify-center space-x-6 mb-8
+                a href=httpswww.tiktok.com@pppppp81234 target=_blank class=text-gray-400 hovertext-white text-2xl transition-colorsi class=fab fa-tiktokia
+                a href=httpswww.instagram.comacclvl50sh10 target=_blank class=text-gray-400 hovertext-white text-2xl transition-colorsi class=fab fa-instagramia
+                a href=httpsdiscord.ggrsp8MBkvzu target=_blank class=text-gray-400 hovertext-white text-2xl transition-colorsi class=fab fa-discordia
+            div
+            p class=text-gray-500 text-sm
+                &copy; 2026 EA League. Not associated with Ubisoft. br
+                Rainbow Six Siege is a trademark of Ubisoft Entertainment.
+            p
+        div
+    footer
+
+    !-- JavaScript Logic --
+    script
+         --- Data & State Management ---
+        
+         Hardcoded Staff Credentials
+        const STAFF_USERS = {
+            'admin' { password 'admin123', name 'EA JODECI', role 'Owner' },
+            'mod' { password 'mod123', name 'EA Support', role 'Moderator' }
+        };
+
+         Initialize LocalStorage if empty
+        function initStorage() {
+            if (!localStorage.getItem('ea_apps')) localStorage.setItem('ea_apps', JSON.stringify([]));
+            if (!localStorage.getItem('ea_tickets')) localStorage.setItem('ea_tickets', JSON.stringify([]));
+            if (!localStorage.getItem('ea_announcements')) localStorage.setItem('ea_announcements', JSON.stringify([]));
+        }
+        initStorage();
+
+         --- Announcement System ---
+
+        function checkAnnouncements() {
+            const announcements = JSON.parse(localStorage.getItem('ea_announcements'));
+             Get the most recent announcement
+            if (announcements.length  0) {
+                const latest = announcements[announcements.length - 1];
+                showAnnouncementModal(latest.title, latest.body);
+            }
+        }
+
+        function showAnnouncementModal(title, body) {
+            const modal = document.getElementById('global-announcement-modal');
+            const content = document.getElementById('announcement-content');
+            
+            document.getElementById('announcement-body').innerHTML = `h3 class=text-xl font-bold text-white mb-2${title}h3p${body}p`;
+            
+            modal.classList.remove('hidden');
+             Small delay to allow displayblock to apply before opacity transition
+            setTimeout(() = {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeAnnouncement() {
+            const modal = document.getElementById('global-announcement-modal');
+            const content = document.getElementById('announcement-content');
+            
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() = {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function postNewAnnouncement() {
+            const title = document.getElementById('newAnnTitle').value;
+            const body = document.getElementById('newAnnBody').value;
+            
+            if (!title  !body) return alert('Please fill in all fields');
+
+            const announcements = JSON.parse(localStorage.getItem('ea_announcements'));
+            announcements.push({ title, body, date new Date().toISOString() });
+            localStorage.setItem('ea_announcements', JSON.stringify(announcements));
+            
+            alert('Announcement Posted! It will show to all users immediately.');
+            toggleAnnouncementForm();
+            document.getElementById('newAnnTitle').value = '';
+            document.getElementById('newAnnBody').value = '';
+        }
+
+         Run announcement check on load
+        window.addEventListener('DOMContentLoaded', () = {
+            setTimeout(checkAnnouncements, 1000);  Delay for effect
+        });
+
+
+         --- Application System ---
+
+        function handleApplication(e) {
+            e.preventDefault();
+            
+            const newApp = {
+                id Date.now(),
+                discord document.getElementById('appDiscord').value,
+                uplay document.getElementById('appUplay').value,
+                rank document.getElementById('appRank').value,
+                team document.getElementById('appTeam').value,
+                reason document.getElementById('appReason').value,
+                date new Date().toLocaleDateString(),
+                status 'Pending'
+            };
+
+            const apps = JSON.parse(localStorage.getItem('ea_apps'));
+            apps.push(newApp);
+            localStorage.setItem('ea_apps', JSON.stringify(apps));
+
+            alert('Application Submitted Successfully!');
+            e.target.reset();
+        }
+
+         --- Support Ticket System ---
+
+        function switchSupportTab(tab) {
+            document.querySelectorAll('.support-panel').forEach(el = el.classList.add('hidden'));
+            document.getElementById(`panel-${tab}`).classList.remove('hidden');
+            
+             Update button styles
+            const createBtn = document.getElementById('tab-create');
+            const viewBtn = document.getElementById('tab-view');
+            
+            if (tab === 'create') {
+                createBtn.className = px-6 py-3 text-emerald-400 border-b-2 border-emerald-500 font-bold transition-colors;
+                viewBtn.className = px-6 py-3 text-gray-400 hovertext-white transition-colors;
+            } else {
+                viewBtn.className = px-6 py-3 text-emerald-400 border-b-2 border-emerald-500 font-bold transition-colors;
+                createBtn.className = px-6 py-3 text-gray-400 hovertext-white transition-colors;
+            }
+        }
+
+        function handleTicketCreate(e) {
+            e.preventDefault();
+             In a real app, we'd capture Discord from auth, here we prompt or assume
+            const discord = prompt(Please confirm your Discord User#1234 to link this ticket);
+            if (!discord) return;
+
+            const newTicket = {
+                id 'TKT-' + Math.floor(Math.random()  10000),
+                discord discord,
+                subject document.getElementById('ticketSubject').value,
+                description document.getElementById('ticketDesc').value,
+                status 'Open',
+                date new Date().toLocaleString(),
+                responses []
+            };
+
+            const tickets = JSON.parse(localStorage.getItem('ea_tickets'));
+            tickets.push(newTicket);
+            localStorage.setItem('ea_tickets', JSON.stringify(tickets));
+
+            alert(`Ticket Created ${newTicket.id}`);
+            e.target.reset();
+            switchSupportTab('view');
+            document.getElementById('searchDiscord').value = discord;
+            loadUserTickets();
+        }
+
+        function loadUserTickets() {
+            const discord = document.getElementById('searchDiscord').value.trim();
+            const container = document.getElementById('ticketListContainer');
+            const tickets = JSON.parse(localStorage.getItem('ea_tickets'));
+            
+            const userTickets = tickets.filter(t = t.discord.toLowerCase() === discord.toLowerCase());
+
+            if (userTickets.length === 0) {
+                container.innerHTML = `div class=text-center text-gray-500 py-4No tickets found for ${discord}div`;
+                return;
+            }
+
+            container.innerHTML = userTickets.map(t = `
+                div class=bg-black40 p-4 rounded border border-gray-700
+                    div class=flex justify-between mb-2
+                        span class=text-emerald-400 font-bold text-sm${t.id}span
+                        span class=text-xs px-2 py-1 rounded bg-gray-800 text-gray-300${t.status}span
+                    div
+                    h4 class=text-white font-bold mb-1${t.subject}h4
+                    p class=text-gray-400 text-sm mb-3${t.description}p
+                    
+                    !-- Response Area --
+                    div class=bg-gray-90050 p-3 rounded mb-3 text-sm
+                        p class=text-gray-500 text-xs mb-1Staff Responsep
+                        p class=text-gray-300 italic${t.responses.length  0  t.responses[t.responses.length-1].text  'No response yet.'}p
+                    div
+
+                    div class=flex gap-2
+                        input type=text id=reply-${t.id} placeholder=Reply... class=flex-1 bg-black border border-gray-700 rounded px-2 py-1 text-sm text-white
+                        button onclick=addUserReply('${t.id}') class=bg-emerald-700 hoverbg-emerald-600 text-white px-3 py-1 rounded text-smSendbutton
+                    div
+                div
+            `).join('');
+        }
+
+        function addUserReply(ticketId) {
+            const input = document.getElementById(`reply-${ticketId}`);
+            const text = input.value;
+            if (!text) return;
+
+            const tickets = JSON.parse(localStorage.getItem('ea_tickets'));
+            const ticket = tickets.find(t = t.id === ticketId);
+            
+            ticket.responses.push({ text, sender 'User', date new Date() });
+            localStorage.setItem('ea_tickets', JSON.stringify(tickets));
+            
+            loadUserTickets();  Refresh
+        }
+
+         --- Staff Portal Logic ---
+
+        let currentStaff = null;
+
+        function handleStaffLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('staffUser').value;
+            const p = document.getElementById('staffPass').value;
+
+            if (STAFF_USERS[u] && STAFF_USERS[u].password === p) {
+                currentStaff = STAFF_USERS[u];
+                document.getElementById('staff-login-view').classList.add('hidden');
+                document.getElementById('staff-dashboard-view').classList.remove('hidden');
+                document.getElementById('staffNameDisplay').innerText = currentStaff.name;
+                renderAdminData();
+            } else {
+                alert('Invalid Credentials');
+            }
+        }
+
+        function staffLogout() {
+            currentStaff = null;
+            document.getElementById('staff-dashboard-view').classList.add('hidden');
+            document.getElementById('staff-login-view').classList.remove('hidden');
+            document.getElementById('staffUser').value = '';
+            document.getElementById('staffPass').value = '';
+        }
+
+        function toggleAnnouncementForm() {
+            const form = document.getElementById('announcement-form');
+            form.classList.toggle('hidden');
+        }
+
+        function renderAdminData() {
+             Update Stats
+            const apps = JSON.parse(localStorage.getItem('ea_apps'));
+            const tickets = JSON.parse(localStorage.getItem('ea_tickets'));
+            
+            document.getElementById('stat-apps').innerText = apps.filter(a = a.status === 'Pending').length;
+            document.getElementById('stat-tickets').innerText = tickets.filter(t = t.status === 'Open').length;
+
+             Render Apps
+            const appContainer = document.getElementById('admin-apps-list');
+            appContainer.innerHTML = apps.map(app = `
+                div class=bg-black30 p-3 rounded border-l-2 ${app.status === 'Pending'  'border-yellow-500'  'border-emerald-500'} flex justify-between items-center
+                    div
+                        div class=text-white font-bold text-sm${app.discord}div
+                        div class=text-gray-500 text-xs${app.team}  ${app.rank}div
+                    div
+                    div class=flex gap-2
+                        ${app.status === 'Pending'  `
+                            button onclick=updateAppStatus(${app.id}, 'Approved') class=text-emerald-400 hovertext-white text-xsi class=fas fa-checkibutton
+                            button onclick=updateAppStatus(${app.id}, 'Denied') class=text-red-400 hovertext-white text-xsi class=fas fa-timesibutton
+                        `  `span class=text-xs text-gray-500${app.status}span`}
+                    div
+                div
+            `).join('');
+
+             Render Tickets
+            const ticketContainer = document.getElementById('admin-tickets-list');
+            ticketContainer.innerHTML = tickets.map(t = `
+                div class=bg-black30 p-3 rounded border-l-2 ${t.status === 'Open'  'border-red-500'  'border-gray-600'}
+                    div class=flex justify-between items-start mb-2
+                        div
+                            div class=text-white font-bold text-sm${t.subject}div
+                            div class=text-gray-500 text-xsBy ${t.discord}div
+                        div
+                        button onclick=closeTicket('${t.id}') class=text-xs bg-gray-700 hoverbg-gray-600 px-2 py-1 rounded text-whiteClosebutton
+                    div
+                    div class=text-gray-400 text-xs mb-2${t.description}div
+                    
+                    !-- Admin Reply --
+                    div class=flex gap-2 mt-2
+                        input type=text id=admin-reply-${t.id} placeholder=Admin response... class=flex-1 bg-gray-900 border border-gray-700 rounded px-2 py-1 text-xs text-white
+                        button onclick=addAdminReply('${t.id}') class=bg-emerald-700 hoverbg-emerald-600 text-white px-2 py-1 rounded text-xsReplybutton
+                    div
+                div
+            `).join('');
+        }
+
+        function updateAppStatus(id, status) {
+            const apps = JSON.parse(localStorage.getItem('ea_apps'));
+            const app = apps.find(a = a.id === id);
+            if (app) {
+                app.status = status;
+                localStorage.setItem('ea_apps', JSON.stringify(apps));
+                renderAdminData();
+            }
+        }
+
+        function addAdminReply(ticketId) {
+            const input = document.getElementById(`admin-reply-${ticketId}`);
+            const text = input.value;
+            if (!text) return;
+
+            const tickets = JSON.parse(localStorage.getItem('ea_tickets'));
+            const ticket = tickets.find(t = t.id === ticketId);
+            
+            if (ticket) {
+                ticket.responses.push({ text, sender currentStaff.name, date new Date() });
+                ticket.status = 'Pending User';  Update status
+                localStorage.setItem('ea_tickets', JSON.stringify(tickets));
+                renderAdminData();
+            }
+        }
+
+        function closeTicket(ticketId) {
+            const tickets = JSON.parse(localStorage.getItem('ea_tickets'));
+            const ticket = tickets.find(t = t.id === ticketId);
+            if(ticket) {
+                ticket.status = 'Closed';
+                localStorage.setItem('ea_tickets', JSON.stringify(tickets));
+                renderAdminData();
+            }
+        }
+
+    script
+body
+html
